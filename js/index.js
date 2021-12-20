@@ -73,7 +73,7 @@ function getGeolocation() {
       displayLayer.removeChild(document.getElementById("result"));
     const text = document.createElement("span");
     text.innerText = "纬度：" + lat + ",经度：" + lon;
-    text.style.wordBreak = 'break-all';
+    text.style.wordBreak = "break-all";
     text.setAttribute("id", "result");
     displayLayer.appendChild(text);
   };
@@ -101,7 +101,10 @@ function getGeolocation() {
 
 //调用摄像头
 async function openCamera() {
-  const constraints = { video: true, audio: false };
+  const constraints = {
+    video: { facingMode: { exact: "environment" } },
+    audio: false,
+  };
   try {
     window.stream = await navigator.mediaDevices.getUserMedia(constraints);
     cameraLayer.style.display = "block";
@@ -125,7 +128,7 @@ function closeCamera() {
   camera.src = "";
   cameraLayer.style.display = "none";
   clearTimeout(window.timer);
-  cameraLayer.classList.remove('scan')
+  cameraLayer.classList.remove("scan");
   //window.camera = false;
   window.stream &&
     window.stream.getTracks().forEach(function (track) {
@@ -219,7 +222,7 @@ const stopRecording = async () => {
 const scanQrCode = async () => {
   closeToggleRecordingBtn.style.display = "none";
   takePhotoBtn.style.display = "none";
-  cameraLayer.classList.add('scan')
+  cameraLayer.classList.add("scan");
   await openCamera();
   window.timer = null;
   window.timer = setTimeout(captureToCanvas, 500);
@@ -228,7 +231,7 @@ const scanQrCode = async () => {
       displayLayer.removeChild(document.getElementById("result"));
     const text = document.createElement("span");
     text.innerText = content;
-    text.style.wordBreak = 'break-all';
+    text.style.wordBreak = "break-all";
     text.setAttribute("id", "result");
     displayLayer.appendChild(text);
     closeCamera();
