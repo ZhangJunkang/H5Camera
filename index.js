@@ -101,7 +101,10 @@ function getGeolocation() {
 
 //调用摄像头
 async function openCamera() {
-  const constraints = { video: { facingMode: "environment" }, audio: false };
+  const constraints = {
+    video: { facingMode: { exact: "environment" } },
+    audio: false,
+  };
   try {
     window.stream = await navigator.mediaDevices.getUserMedia(constraints);
     cameraLayer.style.display = "block";
