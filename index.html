@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>相机</title>
+    <link href="./css/index.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="display" class="display">
+
+    </div>
+    <div class="functions">
+        <button id="openCamera">拍照</button>
+        <button id="toggleRecording">摄像</button>
+        <!-- <button id="takePhoto">拍照</button>
+        <button id="closeCamera">关闭摄像头</button> -->
+        <!-- <button id="toggleRecording">开始录制</button>
+        <button id="closeToggleRecording">结束录制</button> -->
+        <button id="scanQrCode">扫描二维码</button>
+        <button id="getGeolocation">获取定位</button>
+    </div>
+
+    <div class="camera-layer" id="camera-layer" style="display: none;">
+        <video playsInline autoPlay id="camera"></video>
+        <canvas id="qr-canvas"></canvas>
+        <div id="action" class="action">
+            <button id="takePhoto">拍照</button>
+            <button id="closeToggleRecording">结束录制</button>
+            <button id="closeCamera">取消</button>
+        </div>
+    </div>
+
+    <!--qrCode扫描库-->
+    <script type="text/javascript" defer src="./libs/qrCode/grid.js"></script>
+    <script type="text/javascript" defer src="./libs/qrCode/version.js"></script>
+    <script type="text/javascript" defer src="./libs/qrCode/detector.js"></script>
+    <script type="text/javascript" defer src="./libs/qrCode/formatinf.js"></script>
+    <script type="text/javascript" defer src="./libs/qrCode/errorlevel.js"></script>
+    <script type="text/javascript" defer src="./libs/qrCode/bitmat.js"></script>
+    <script type="text/javascript" defer src="./libs/qrCode/datablock.js"></script>
+    <script type="text/javascript" defer src="./libs/qrCode/bmparser.js"></script>
+    <script type="text/javascript" defer src="./libs/qrCode/datamask.js"></script>
+    <script type="text/javascript" defer src="./libs/qrCode/rsdecoder.js"></script>
+    <script type="text/javascript" defer src="./libs/qrCode/gf256poly.js"></script>
+    <script type="text/javascript" defer src="./libs/qrCode/gf256.js"></script>
+    <script type="text/javascript" defer src="./libs/qrCode/decoder.js"></script>
+    <script type="text/javascript" defer src="./libs/qrCode/qrcode.js"></script>
+    <script type="text/javascript" defer src="./libs/qrCode/findpat.js"></script>
+    <script type="text/javascript" defer src="./libs/qrCode/alignpat.js"></script>
+    <script type="text/javascript" defer src="./libs/qrCode/databr.js"></script>
+
+    <script src="./js/index.js"></script>
+</body>
+
+</html>
