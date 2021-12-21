@@ -1,7 +1,3 @@
-body{
-  margin: 0;
-}
-
 .display {
   width: 100%;
   height: 70vh;
@@ -24,8 +20,9 @@ body{
 .camera-layer {
   position: absolute;
   top: 0;
-  width: 100vw;
-  height: 100vh;
+  bottom: 0;
+  right: 0;
+  left: 0;
 }
 
 .scan::before{
@@ -56,8 +53,6 @@ body{
   width: 100%;
   height: 100%;
   object-fit:fill;
-  position: relative;
-  z-index:100;
 }
 
 .camera-layer #qr-canvas{
@@ -72,7 +67,6 @@ body{
   bottom: 0;
   padding: 5px;
   box-sizing: border-box;
-  z-index:110;
 }
 
 .camera-layer .action button {
