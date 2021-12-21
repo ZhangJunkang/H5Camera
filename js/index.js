@@ -119,10 +119,10 @@ async function openCamera(facingMode) {
       // 防止再新的浏览器里使用它，应为它已经不再支持了
       camera.src = window.URL.createObjectURL(window.stream);
     }
-    window.stream.onloadedmetadata = function (e) {
-      window.stream.play();
-      //window.camera = true;
-    };
+    // window.stream.onloadedmetadata = function (e) {
+    //   window.stream.play();
+    //   //window.camera = true;
+    // };
   } catch (error) {
     console.error(error.name + ": " + error.message);
   }
