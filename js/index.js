@@ -102,7 +102,8 @@ function getGeolocation() {
 //调用摄像头
 async function openCamera() {
   const constraints = {
-    video: { facingMode: { exact: "environment" } },
+    video: { facingMode: "environment" },
+    // video: { facingMode: { exact: "environment" } },
     audio: false,
   };
   try {
