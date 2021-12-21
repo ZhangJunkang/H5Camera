@@ -144,7 +144,6 @@ function closeCamera() {
 
 //切换摄像头
 async function switchCamera() {
-  camera.src = "";
   window.stream &&
     window.stream.getTracks().forEach(function (track) {
       track.stop();
