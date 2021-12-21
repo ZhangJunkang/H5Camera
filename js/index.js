@@ -100,9 +100,10 @@ function getGeolocation() {
 }
 
 //调用摄像头
-async function openCamera() {
+async function openCamera(facingMode) {
+  window.mode = facingMode;
   const constraints = {
-    video: { facingMode: "environment" },
+    video: { facingMode: facingMode },
     // video: { facingMode: { exact: "environment" } },
     audio: false,
   };
@@ -137,11 +138,21 @@ function closeCamera() {
     });
 }
 
+//切换摄像头
+function switchCamera() {
+  camera.src = "";
+  window.stream &&
+    window.stream.getTracks().forEach(function (track) {
+      track.stop();
+    });
+  openCamera(window.mode === "user" ? "environment" : "user");
+}
+
 //拍照
 function startTakePhoto() {
   closeToggleRecordingBtn.style.display = "none";
   takePhotoBtn.style.display = "block";
-  openCamera();
+  openCamera('environment');
 }
 
 //拍照
@@ -181,7 +192,7 @@ const startRecording = async () => {
   try {
     closeToggleRecordingBtn.style.display = "block";
     takePhotoBtn.style.display = "none";
-    await openCamera();
+    await openCamera('environment');
     window.recordedBlobs = [];
     window.mediaRecorders = await new MediaRecorder(window.stream, options);
   } catch (e) {
@@ -224,7 +235,7 @@ const scanQrCode = async () => {
   closeToggleRecordingBtn.style.display = "none";
   takePhotoBtn.style.display = "none";
   cameraLayer.classList.add("scan");
-  await openCamera();
+  await openCamera('environment');
   window.timer = null;
   window.timer = setTimeout(captureToCanvas, 500);
   qrcode.callback = (content) => {
