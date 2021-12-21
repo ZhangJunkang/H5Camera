@@ -50,7 +50,7 @@ takePhotoBtn.onclick = () => {
   takePhoto();
 };
 toggleRecordingBtn.onclick = () => {
-  startRecording();
+  startRecording("environment");
 };
 closeToggleRecordingBtn.onclick = () => {
   stopRecording();
@@ -60,7 +60,7 @@ scanQrCodeBtn.onclick = () => {
 };
 switchBtn.onclick = () => {
   switchCamera();
-}
+};
 
 //获取地理位置
 function getGeolocation() {
@@ -143,20 +143,27 @@ function closeCamera() {
 }
 
 //切换摄像头
-function switchCamera() {
+async function switchCamera() {
   camera.src = "";
   window.stream &&
     window.stream.getTracks().forEach(function (track) {
       track.stop();
     });
-  openCamera(window.mode === "user" ? "environment" : "user");
+  if (window.curr === "Recording") {
+    await window.mediaRecorders.stop();
+    startRecording(window.mode === "user" ? "environment" : "user");
+  } else {
+    openCamera(window.mode === "user" ? "environment" : "user");
+  }
 }
 
 //拍照
 function startTakePhoto() {
+  window.curr = "TakePhoto";
   closeToggleRecordingBtn.style.display = "none";
   takePhotoBtn.style.display = "block";
-  openCamera('environment');
+  switchBtn.style.display = "block";
+  openCamera("environment");
 }
 
 //拍照
@@ -181,7 +188,7 @@ function takePhoto() {
 }
 
 //摄像
-const startRecording = async () => {
+const startRecording = async (facingMode) => {
   let options = { mimeType: "video/webm;codecs=h264" };
   if (!MediaRecorder.isTypeSupported(options.mimeType)) {
     options = { mimeType: "video/webm;codecs=vp8" };
@@ -194,9 +201,12 @@ const startRecording = async () => {
   }
 
   try {
+    //当前的模式
+    window.curr = "Recording";
     closeToggleRecordingBtn.style.display = "block";
     takePhotoBtn.style.display = "none";
-    await openCamera('environment');
+    switchBtn.style.display = "block";
+    await openCamera(facingMode);
     window.recordedBlobs = [];
     window.mediaRecorders = await new MediaRecorder(window.stream, options);
   } catch (e) {
@@ -208,12 +218,12 @@ const startRecording = async () => {
     );
     return;
   }
-  mediaRecorders.ondataavailable = (event) => {
+  window.mediaRecorders.ondataavailable = (event) => {
     if (event.data && event.data.size > 0) {
       recordedBlobs.push(event.data);
     }
   };
-  mediaRecorders.start(10); // collect 10ms of data
+  window.mediaRecorders.start(10); // collect 10ms of data
   console.log("MediaRecorder started");
 };
 
@@ -236,10 +246,12 @@ const stopRecording = async () => {
 
 //扫描二维码
 const scanQrCode = async () => {
+  window.curr = "Scan";
   closeToggleRecordingBtn.style.display = "none";
   takePhotoBtn.style.display = "none";
+  switchBtn.style.display = "none";
   cameraLayer.classList.add("scan");
-  await openCamera('environment');
+  await openCamera("environment");
   window.timer = null;
   window.timer = setTimeout(captureToCanvas, 500);
   qrcode.callback = (content) => {
