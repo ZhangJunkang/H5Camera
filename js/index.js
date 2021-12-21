@@ -6,6 +6,7 @@ const toggleRecordingBtn = document.getElementById("toggleRecording");
 const closeToggleRecordingBtn = document.getElementById("closeToggleRecording");
 const scanQrCodeBtn = document.getElementById("scanQrCode");
 const getGeolocationBtn = document.getElementById("getGeolocation");
+const switchBtn = document.getElementById("switch");
 
 const cameraLayer = document.getElementById("camera-layer");
 const camera = document.getElementById("camera");
@@ -57,6 +58,9 @@ closeToggleRecordingBtn.onclick = () => {
 scanQrCodeBtn.onclick = () => {
   scanQrCode();
 };
+switchBtn.onclick = () => {
+  switchCamera();
+}
 
 //获取地理位置
 function getGeolocation() {
