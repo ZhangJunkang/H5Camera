@@ -113,7 +113,7 @@ async function openCamera(facingMode) {
   };
   try {
     window.stream = await navigator.mediaDevices.getUserMedia(constraints);
-    cameraLayer.style.display = "block";
+    cameraLayer.style.visibility = "visible";
     if ("srcObject" in camera) {
       camera.srcObject = window.stream;
     } else {
@@ -132,7 +132,7 @@ async function openCamera(facingMode) {
 //停止摄像头
 function closeCamera() {
   camera.src = "";
-  cameraLayer.style.display = "none";
+  cameraLayer.style.visibility = "hidden";
   clearTimeout(window.timer);
   cameraLayer.classList.remove("scan");
   //window.camera = false;
