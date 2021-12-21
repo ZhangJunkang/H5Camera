@@ -76,7 +76,7 @@ function getGeolocation() {
     document.getElementById("result") &&
       displayLayer.removeChild(document.getElementById("result"));
     const text = document.createElement("span");
-    text.innerText = "纬度：" + lat + ",经度：" + lon;
+    text.innerText = "latitude：" + lat + ",longitude：" + lon;
     text.style.wordBreak = "break-all";
     text.setAttribute("id", "result");
     displayLayer.appendChild(text);
