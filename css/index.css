@@ -54,6 +54,8 @@
   width: 100%;
   height: 100%;
   object-fit:fill;
+  position: relative;
+  z-index:100;
 }
 
 .camera-layer #qr-canvas{
@@ -68,6 +70,7 @@
   bottom: 0;
   padding: 5px;
   box-sizing: border-box;
+  z-index:110;
 }
 
 .camera-layer .action button {
