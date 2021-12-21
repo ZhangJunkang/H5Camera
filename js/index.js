@@ -143,17 +143,19 @@ function closeCamera() {
 }
 
 //切换摄像头
-async function switchCamera() {
+function switchCamera() {
   window.stream &&
     window.stream.getTracks().forEach(function (track) {
       track.stop();
     });
-  if (window.curr === "Recording") {
-    await window.mediaRecorders.stop();
-    startRecording(window.mode === "user" ? "environment" : "user");
-  } else {
-    openCamera(window.mode === "user" ? "environment" : "user");
-  }
+  setTimeout(async () => {
+    if (window.curr === "Recording") {
+      await window.mediaRecorders.stop();
+      startRecording(window.mode === "user" ? "environment" : "user");
+    } else {
+      openCamera(window.mode === "user" ? "environment" : "user");
+    }
+  }, 500);
 }
 
 //拍照
