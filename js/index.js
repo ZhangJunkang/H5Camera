@@ -113,7 +113,6 @@ async function openCamera(facingMode) {
   };
   try {
     window.stream = await navigator.mediaDevices.getUserMedia(constraints);
-    cameraLayer.style.visibility = "visible";
     if ("srcObject" in camera) {
       camera.srcObject = window.stream;
     } else {
@@ -143,28 +142,27 @@ function closeCamera() {
 }
 
 //切换摄像头
-function switchCamera() {
+async function switchCamera() {
   window.stream &&
     window.stream.getTracks().forEach(function (track) {
       track.stop();
     });
-  setTimeout(async () => {
-    if (window.curr === "Recording") {
-      await window.mediaRecorders.stop();
-      startRecording(window.mode === "user" ? "environment" : "user");
-    } else {
-      openCamera(window.mode === "user" ? "environment" : "user");
-    }
-  }, 500);
+  if (window.curr === "Recording") {
+    await window.mediaRecorders.stop();
+    startRecording(window.mode === "user" ? "environment" : "user");
+  } else {
+    openCamera(window.mode === "user" ? "environment" : "user");
+  }
 }
 
 //拍照
-function startTakePhoto() {
+async function startTakePhoto() {
   window.curr = "TakePhoto";
   closeToggleRecordingBtn.style.display = "none";
   takePhotoBtn.style.display = "block";
   switchBtn.style.display = "block";
-  openCamera("environment");
+  await openCamera("environment");
+  cameraLayer.style.visibility = "visible";
 }
 
 //拍照
@@ -208,6 +206,7 @@ const startRecording = async (facingMode) => {
     takePhotoBtn.style.display = "none";
     switchBtn.style.display = "block";
     await openCamera(facingMode);
+    cameraLayer.style.visibility = "visible";
     window.recordedBlobs = [];
     window.mediaRecorders = await new MediaRecorder(window.stream, options);
   } catch (e) {
@@ -253,6 +252,7 @@ const scanQrCode = async () => {
   switchBtn.style.display = "none";
   cameraLayer.classList.add("scan");
   await openCamera("environment");
+  cameraLayer.style.visibility = "visible";
   window.timer = null;
   window.timer = setTimeout(captureToCanvas, 500);
   qrcode.callback = (content) => {
